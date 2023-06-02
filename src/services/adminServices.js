@@ -6,8 +6,6 @@ const login = async (adminData) => {
     password: adminData.password,
   });
 
-  console.log(admin);
-
   if (admin) {
     return {
       admin,
@@ -19,6 +17,23 @@ const login = async (adminData) => {
   }
 };
 
+const register = async (data) => {
+  console.log(data);
+  const user = await admin_data.findOne({ userName: data.userName });
+  if (user) {
+    return {
+      message: "user already exists",
+    };
+  } else {
+    const adminData = new admin_data(data);
+    const savedData = await adminData.save();
+    return {
+      signUp: true,
+    };
+  }
+};
+
 module.exports = {
   login,
+  register,
 };
